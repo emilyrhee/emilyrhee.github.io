@@ -1,0 +1,25 @@
+{
+    "post_component": "",
+    "theme": "base.html",
+    "email": " ",
+    "base_link": "",
+    "github_repo_url": "",
+    "tab_title": "temp-username1",
+    "auto_push_git": true,
+    "grid_cols": {
+        "sm": "1",
+        "md": "2",
+        "lg": "3"
+    },
+    "colors": {
+        "c1": "#e0e4f8",
+        "c2": "#7890f8",
+        "c3": "#60735b",
+        "c4": "#e5d07a",
+        "c5": "#E0DAC3"
+    },
+    "username": "my cool site",
+    "profile_pic": "",
+    "first_load": true,
+    "active_html_webpage": "index.html"
+}

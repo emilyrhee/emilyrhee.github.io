@@ -1,0 +1,136 @@
+import tkinter as tk
+import os
+from tkinter import font
+try:
+    from ctypes import windll
+    windll.shcore.SetProcessDpiAwareness(1)
+except ImportError:
+   
+    pass
+
+from app.util.controller import JsonController, Controller
+from app.util.serve_localhost import LocalHTTPServer
+from app.gui.tutorial.tutorial_window import init_tutorial
+from app.gui.styles import BaseStyle
+from app.gui.widgets.frames import PageFrame
+
+from .windows.landing.landing import Landing
+from .windows.new_post.new_post_window import  NewPostFrame
+from .subwindows.configure_website import ConfigureWebsite
+from .subwindows.edit_posts import EditPosts
+
+colors = JsonController.get_config_data("colors")
+C1 = colors["c1"]
+C2 = colors["c2"]
+C3 = colors["c3"]
+C4 = colors["c4"]
+
+class MainWindow(tk.Tk):
+    def __init__(self):
+        super().__init__()
+        style = BaseStyle()
+        
+        self.title("Pie Post")
+        self.geometry(f"{1720}x{1020}+5+5")
+        self.resizable(True, True)
+        self.minsize(1720, 1020 )
+
+        if os.path.exists("config/piecon.ico") and os.name == "nt":
+            self.iconbitmap("config/piecon.ico")
+        self.config(bg=style.page_background, border=2, relief="solid")
+        
+        #HEADER
+        self.header_frame = PageFrame(self)
+        self.header_frame.pack(fill='x', expand=False ,padx=3, pady=3, ipady=3)
+        self.landing_btn = None
+        self.test_btn = None
+        self.page_title_lbl = None
+        
+        #BODY
+        self.body_frame = PageFrame(self)
+        self.body_frame.pack(fill='both', expand= True)
+        self.body_content = None
+        
+        self.load_content("Landing")
+        #init_tutorial(self)
+
+    def new_content_frame(self):
+        if self.body_content:
+            self.body_content.destroy()
+        self.body_content = PageFrame(self.body_frame)
+        self.body_content.pack(fill='both', expand= True,padx=5, pady=5)
+    
+    def pack_landing_page_btn(self):
+        FONT_SM = font.Font(family="Helvetica", size=10)
+        self.landing_btn = tk.Button(
+            self.header_frame, 
+            text="Landing Page", 
+            command=lambda: self.load_content("Landing"),
+            font=FONT_SM,
+            bg=C4)
+        self.landing_btn.place(relx=1.0, x=-20, y=20, anchor="ne") 
+    
+    def pack_test_btn(self):
+        FONT_SM = font.Font(family="Helvetica", size=10)
+        self.test_btn = tk.Button(
+            self.header_frame, 
+            text="Test With Local Host", 
+            command=Controller.open_index_html_local_host,
+            font=FONT_SM,
+            bg=C4)
+        self.test_btn.place(relx=0.0, x=20, y=20, anchor="nw") 
+
+    def remove_test_btn(self):
+        if self.test_btn:
+            self.test_btn.pack_forget()
+    
+    def remove_landing_page_btn(self):
+        if self.landing_btn:
+            self.landing_btn.pack_forget()
+
+    def set_page_title(self, title):
+        if self.page_title_lbl:
+            self.page_title_lbl.pack_forget()
+        FONT= font.Font(family="Helvetica", size=30, weight="bold")
+        self.page_title_lbl = tk.Label(
+            self.header_frame, 
+            text=title, 
+            bg= 'white',
+            font= FONT,
+            border=1,
+            relief="solid")
+        self.page_title_lbl.pack(expand=True, fill='both', padx=10, pady=10)
+
+    def load_content(self, content):
+        """
+        Accepts new_content: "Landing", "NewPost", "ConfigureWebsite", "EditPosts"
+        """
+        self.new_content_frame()
+        if content == "Landing":
+            self.remove_landing_page_btn()
+            self.remove_test_btn()
+            self.set_page_title("Pie Post - Website Generator 2000")
+            landing = Landing(self.body_content, self)
+            landing.pack(fill='both', expand= True)
+        elif content == "NewPost":
+            self.set_page_title("New Post")
+            self.pack_landing_page_btn()
+            self.pack_test_btn()
+            new_post = NewPostFrame(self.body_content, self)
+            new_post.pack(fill='both', expand= True)
+        elif content == "ConfigureWebsite":
+            self.set_page_title("Configure Website")
+            self.pack_landing_page_btn()
+            self.pack_test_btn()
+            configure_post = ConfigureWebsite(self.body_content, self)
+            configure_post.pack(fill='both', expand= True)
+        elif content == "EditPosts":
+            self.set_page_title("Edit Posts")
+            self.pack_landing_page_btn() 
+            self.pack_test_btn()
+            edit_posts = EditPosts(self.body_content)
+            edit_posts.pack(fill='both', expand= True)
+  
+        self.body_content.pack(fill='both', expand= True)
+        
+
