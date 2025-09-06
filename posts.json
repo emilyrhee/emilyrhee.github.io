@@ -14,5 +14,18 @@
                 "text": "Main site"
             }
         ]
+    },
+    "000002": {
+        "datetime": "2025-09-06 17:51:25.173499",
+        "title": "Funky Kong Appreciation",
+        "caption": "Funky Kong is my favorite member of the Kongs.",
+        "media_links": [
+            "https://emilyrhee.github.io/assets/imagesasa.png"
+        ],
+        "base_link": "https://emilyrhee.github.io/",
+        "username": "sushimomo",
+        "profile_pic": "",
+        "email": " ",
+        "links": []
     }
 }
