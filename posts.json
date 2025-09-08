@@ -27,5 +27,18 @@
         "profile_pic": "",
         "email": " ",
         "links": []
+    },
+    "000003": {
+        "datetime": "2025-09-07 22:12:49.098748",
+        "title": "Pointer Direction",
+        "caption": "While fiddling around with the Pie Post application, I found my cursor reflected about the y-axis. This made me wonder... would left-handed people prefer this over the current convention? I will have to find some left-handed people and experiment on them.",
+        "media_links": [
+            "https://emilyrhee.github.io/assets/Screenshot%20From%202025-09-07%2022-07-14.png"
+        ],
+        "base_link": "https://emilyrhee.github.io/",
+        "username": "sushimomo",
+        "profile_pic": "",
+        "email": " ",
+        "links": []
     }
 }
